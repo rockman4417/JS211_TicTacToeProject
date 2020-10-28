@@ -35,7 +35,7 @@ const addMarker = (id) => {
   // .getElementById(id)
   // document
   // .innerHTML 
-  
+  document.getElementById(id).innerHTML = currentMarker
   // Arrange the above pieces into one a single line of code
   // to add an X or O to the board to the DOM so it can be scene on the screen.
 }
@@ -47,9 +47,11 @@ const updateBoard = (id) => {
   const column = parseInt(id.charAt(2)) 
 
   console.log(`you clicked the sq at ${row} and ${column}`)
-  console.log(board)
+  
 
   // @TODO, Your code here: use the above information to change the board variable(array of arrays)
+  board[row][column] = currentMarker
+  
   // HINT: in your browser open up the dev tools -> console
 }
 
@@ -58,6 +60,7 @@ const checkForWin = () => {
   if(horizontalWin() || verticalWin() || diagonalWin()) {
     // **BONUS** you could make the dismissal of this alert window reset the board...
     window.alert(`Player ${currentMarker} won!`)
+    resetBoard()
   } else {
     // if no win, change the marker from X to O, or O to X for the next player.
     changeMarker()
@@ -65,15 +68,39 @@ const checkForWin = () => {
 }
 
 const horizontalWin = () => {
-  // @TODO, Your code here: to check for horizontal wins
+  // Your code here to check for horizontal wins
+  //if (xxx,---,--- or ---,xxx,--- or ---,---,xxx) or (ooo,---,--- or ---,ooo,--- or ---,---,ooo) 
+  //then return true 
+  if((board[0][0]==="X" && board[0][1] ==="X" && board[0][2] ==="X") || (board[1][0]==="X" && board[1][1] ==="X" && board[1][2]==="X") || (board[2][0]==="X" && board[2][1]==="X" && board[2][2]==="X")) {
+    return true
+  }
+  if((board[0][0]==="O" && board[0][1] === "O" && board[0][2] ==="O") || (board[1][0]==="O" && board[1][1] ==="O" && board[1][2]==="O") || (board[2][0]==="O" && board[2][1]==="O" && board[2][2]==="O")) {
+    return true
+  }
 }
 
 const verticalWin = () => {
-  // @TODO, Your code here: to check for vertical wins
+  // Your code here to check for vertical wins
+  //if (x--,x--,x-- or -x-,-x-,-x- or --x,--x,--x) or (o--,o--,o-- or -o-,-o-,-o- or --o,--o,--o)
+  //then return true
+  if((board[0][0]==="X" && board[1][0] ==="X" && board[2][0] ==="X") || (board[0][1]==="X" && board[1][1] ==="X" && board[2][1]==="X") || (board[0][2]==="X" && board[1][2]==="X" && board[2][2]==="X")) {
+    return true
+  }
+  if((board[0][0]==="O" && board[1][0] === "O" && board[2][0] ==="O") || (board[0][1]==="O" && board[1][1] ==="O" && board[2][1]==="O") || (board[0][2]==="O" && board[1][2]==="O" && board[2][2]==="O")) {
+    return true
+  }
 }
 
 const diagonalWin = () => {
-  // @TODO, Your code here: to check for diagonal wins
+  // Your code here to check for diagonal wins
+  //if (x--,-x-,--x or --x,-x-,x--) or (o--,-o-,--o or --o,-o-,o--)
+  //then return true
+  if((board[0][0]==="X" && board[1][1] ==="X" && board[2][2] ==="X") || (board[0][2]==="X" && board[1][1] ==="X" && board[2][0]==="X")) {
+    return true
+  }
+  if((board[0][0]==="O" && board[1][1] === "O" && board[2][2] ==="O") || (board[0][2]==="O" && board[1][1] ==="O" && board[2][0]==="O")) {
+    return true
+  }
 }
 
 const changeMarker = () => {
@@ -83,14 +110,17 @@ const changeMarker = () => {
 
 const resetBoard = () => {
   // sanity check: this tells us the function is being called
-  console.log("the board was cleared!")
-
+  board = [
+    ['','',''],
+    ['','',''],
+    ['','','']
+  ];
+  currentMarker = "X"
   // collects all of the "td"s into an HTML Collection: https://www.w3schools.com/jsref/dom_obj_htmlcollection.asp  
   const squares = document.getElementsByTagName("TD")
   
   // loops over the HTML Collections and clears out the Xs and Os
   for (i=0; i<squares.length; i++) {
-    console.log(squares[i])
     squares[i].innerHTML = null
   }
   

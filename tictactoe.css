@@ -1,7 +1,17 @@
-td{
-  height:150px;
-  width:150px;
+td {
+  height: 150px;
+  width: 150px;
   text-align: center;
-  border: 5px solid black;
+  border: 5px solid rgb(255, 255, 255);
   font-size: 100px;
+  cursor: pointer;
+}
+
+body {
+  background: rgb(47, 45, 45);
+  color: white;
+}
+
+.jumbotron {
+  color: black;
 }
